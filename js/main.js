@@ -35,7 +35,6 @@ function createMaterialArray(filename) {
 
 function setSkyBox() {
   const materialArray = createMaterialArray(skyboxImage);
-  
   let skyboxGeo = new THREE.BoxGeometry(200, 200, 200);
   skybox = new THREE.Mesh(skyboxGeo, materialArray);
   scene.add(skybox);
@@ -62,8 +61,7 @@ function init() {
   controls = new OrbitControls(camera, renderer.domElement);
   controls.enableDamping = true;
   controls.minDistance = 5;
-  controls.maxDistance = 100;
-
+  controls.maxDistance = 50;
   camera.position.z = 20;
 }
 
@@ -122,6 +120,21 @@ function onWindowResize() {
 // moviePlanescreen.position.set(0,50,0);
 // scene.add(moviePlanescreen);
 
+// create an AudioListener and add it to the camera
+const listener = new THREE.AudioListener();
+
+
+// create a global audio source
+const sound = new THREE.Audio( listener );
+
+// load a sound and set it as the Audio object's buffer
+const audioLoader = new THREE.AudioLoader();
+audioLoader.load( 'sa/544083.beat-spacestation.mp3', function( buffer ) {
+	sound.setBuffer( buffer );
+	sound.setLoop( true );
+	sound.setVolume( 0.5 );
+	sound.play();
+});
 
 init();
 animate();
