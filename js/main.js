@@ -3,6 +3,8 @@ import { OrbitControls } from "https://cdn.skypack.dev/three@0.129.0/examples/js
 
 let scene, camera, renderer, sphere, controls, skybox;
 let skyboxImage = "space";
+
+
 const sdBtn = document.querySelector(".sd");
 const hdBtn = document.querySelector(".hd");
 
@@ -11,8 +13,10 @@ hdBtn.onclick = () => changeTextQuality("high");
 
 function createPathStrings(filename) {
   const basePath = "../img/skybox/";
+  
   const baseFilename = basePath + filename;
   const fileType = ".png";
+  const fileType1 = ".mp4";
   const sides = ["ft", "bk", "up", "dn", "rt", "lf"];
   const pathStrings = sides.map((side) => {
     return baseFilename + "_" + side + fileType;
@@ -31,8 +35,7 @@ function createMaterialArray(filename) {
 
 function setSkyBox() {
   const materialArray = createMaterialArray(skyboxImage);
-  // let temp = new THREE.TextureLoader().load("../img/space_stars_bg.jpg");
-  // let temp1 = new THREE.MeshBasicMaterial({ map: temp, side: THREE.BackSide });
+  
   let skyboxGeo = new THREE.BoxGeometry(200, 200, 200);
   skybox = new THREE.Mesh(skyboxGeo, materialArray);
   scene.add(skybox);
@@ -92,6 +95,7 @@ function changeTextQuality(quality) {
 
 function animate() {
   requestAnimationFrame(animate);
+  //  videoTexure.needsUpdate = true;
   sphere.rotation.y += 0.002;
   controls.update();
   renderer.render(scene, camera);
@@ -102,8 +106,22 @@ function onWindowResize() {
   camera.updateProjectionMatrix();
   renderer.setSize(window.innerWidth, window.innerHeight);
 }
+// videoTexure.minFilter = THREE.LinearFilter;
+// videoTexure.magfilter = THREE.LinearFilter;
 
-window.addEventListener("resize", onWindowResize, false);
+// var movieMaterial = new THREE.MeshBasicMaterial({
+
+//   map: videoTexure,
+//   side: THREE.Forntside,
+//   toneMapped:false,
+
+// }); 
+// let movieGeometry = new THREE.PlaneGeometry(800,400);
+// let moviePlanescreen = new THREE.Mesh(movieGeometry,movieMaterial);
+
+// moviePlanescreen.position.set(0,50,0);
+// scene.add(moviePlanescreen);
+
 
 init();
 animate();
